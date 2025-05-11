@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "target/route_server";
+
+import "source/route_server/errors.proto";
+enum protocolID {
+    UNDEFINED = 0;
+    REQUEST_LOGIN_AUTHENTICATION = 3;
+    REPLY_LOGIN_AUTHENTICATION = 4;
+    REQUEST_KEEP_LIVING = 5;
+    REPLY_KEEP_LIVING = 6;
+    MESSAGE_CLIENT_TO_SERVER = 7;
+    MESSAGLE_SERVER_TO_CLIENT = 8;
+}
+
+message RequestLoginAuthentication {
+    string unique_device_id = 1;        //硬件码
+    int32 channel_id = 2;               //渠道号
+    string os_version = 3;              //操作系统版本号
+    string client_version = 4;          //客户端版本号
+}
+
+message ReplyLoginAuthentication {
+    uint32 platform_id = 1;             //平台id
+    uint32 user_id = 2;                 //用户id，玩家属于用户，但用户不仅限于玩家
+    ErrorCode error_code = 100;         //错误码
+}
+
+//使玩家连接保持活跃，也可以用于客户端测速
+message RequestKeepLiving {
+    uint32 request_id = 1;              // 请求id
+    bool is_reply = 2;                  // 是否回复
+}
+
+message ReplyKeepLiving {
+    bool is_living = 1;                 //  是否存活
+}
+
+message MessageClientToServer {
+    uint32 server_id = 1;               // 服务id
+    uint32 process_id = 2;              // 进程id
+    uint32 protocol_id = 3;             // 协议id
+    uint32 message_id = 4;              // 请求消息id
+    bytes message_data = 5;             // 请求消息数据
+}
+
+message MessageServerToClient {
+    uint32 server_id = 1;               // 服务id
+    uint32 process_id = 2;              // 进程id
+    uint32 protocol_id = 3;             // 协议id
+    uint32 message_id = 4;              // 请求消息id
+    bytes message_data = 5;             // 请求消息数据
+}

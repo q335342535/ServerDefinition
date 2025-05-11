@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "target/user_server";
+import "source/user_server/errors.proto";
+import "source/common/message.define.proto";
+
+enum protocolID {
+    UNDEFINED = 0;
+    REQUEST_USER_DATA = 1;                  // 请求用户数据
+    REPLY_USER_DATA = 2;                    // 回复用户数据
+    REQUEST_REAL_NAME_AUTHENTICATION = 3;   // 请求实名认证
+    REPLY_REAL_NAME_AUTHENTICATION = 4;     // 回复实名认证
+    REQUEST_MOBILE_BINDING = 5;             // 请求手机号绑定
+    REPLY_MOBILE_BINDING = 6;               // 回复手机号绑定
+    REQUEST_USER_GAME_POSITION = 7;         // 请求用户游戏位置
+    REPLY_USER_GAME_POSITION = 8;           // 回复用户游戏位置
+}
+
+message RequestUserData {
+    //不需要再这里添加参数，因为它的参数是platform_id和user_id，上下文自带
+}
+
+message ReplyUserData {
+    string nick_name = 1;               //昵称
+    string head_url = 2;                //头像
+    int32 sex = 3;                      //性别
+    bool is_real_name_authentication = 4;              //是否实名
+    string mobile = 5;                  //手机号
+
+}
+
+message RequestRealNameAuthentication  {
+    string real_name = 1;               //真实姓名
+    string id_card = 2;                 //身份证号
+}
+
+message ReplyRealNameAuthentication {
+    ErrorCode  error_code = 100;
+}
+
+message RequestMobileBinding {
+    string mobile = 1;
+    string mobile_code = 2;
+}
+
+message ReplyMobileBinding {
+    ErrorCode  error_code = 100;
+}
+
+message RequestUserGamePosition {
+}
+
+message ReplyUserGamePosition {
+    GamePosition game_position = 1;
+    ErrorCode  error_code = 100;
+}

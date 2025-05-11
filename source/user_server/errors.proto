@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "target/user_server";
+
+// ErrorCode 定义系统错误码
+enum ErrorCode {
+    // 前三个数是ServerID，中间三个数是协议ID，后三个数是错误ID
+    SUCCESS = 0;
+    REAL_NAME_AUTHENTICATION_ERROR_CODE_BEGIN = 001004000;                   // 成功
+    REAL_NAME_AUTHENTICATION_FAIL = 001004001;                              // 实名认证失败
+
+    MOBILE_BINDING_ERROR_CODE_BEGIN = 001006000;                   // 成功
+    MOBILE_BINDING_FAIL = 001006001;                              // 手机绑定失败
+} 

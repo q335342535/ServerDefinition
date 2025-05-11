@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "target/prop_server";
+
+import "source/prop_server/errors.proto";
+enum protocolID {
+    UNDEFINED = 0;
+    REQUEST_ALL_PROPS_DATA = 1;
+    REPLY_ALL_PROPS_DATA = 2;
+}
+
+message RequestAllPropsData {
+
+}
+
+message ReplyAllPropsData {
+    ErrorCode error_code = 100;
+}

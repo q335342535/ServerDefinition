@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package protobuf;
+option go_package = "target/entry_server";
+import "source/entry_server/errors.proto";
+import "source/common/message.define.proto";
+
+enum protocolID {
+    UNDEFINED = 0;
+    REQUEST_JOIN_FIELD = 1;
+    REPLY_JOIN_FIELD = 2;
+    REQUEST_LEAVE_FIELD = 3;
+    REPLY_LEAVE_FIELD = 4;
+    REQUEST_CREATE_ROOM = 5;
+    REPLY_CREATE_ROOM = 6;
+    REQUEST_JOIN_ROOM = 7;
+    REPLY_JOIN_ROOM = 8;
+}
+
+message RequestJoinField {
+    uint32 game_id = 1;
+    uint32 field_id = 2;
+    uint32 seat_count = 3;
+
+}
+
+message ReplyJoinField {
+    GamePosition game_position = 1;
+    ErrorCode error_code = 100;
+}
+
+message RequestLeaveField {
+    uint32 game_id = 1;         // 离开指定游戏，不传服务会全部查询
+    uint32 field_id = 2;        // 离开指定场，不传服务会全部查询
+    uint32 seat_count = 3;      // 离开指定座位，不传服务会全部查询
+}
+
+message ReplyLeaveField {
+    uint32 game_id = 1; 
+    uint32 field_id = 2;       
+    uint32 seat_count = 3;      
+    ErrorCode error_code = 100;
+}
+
+message RequestCreateRoom {
+    uint32 game_id = 1;
+    uint32 seat_count = 2;
+    uint32 round_count = 3;
+    bytes game_rule = 4;           
+}
+
+message ReplyCreateRoom {
+    GamePosition game_position = 1;
+    ErrorCode error_code = 100;
+}
+
+message RequestJoinRoom {
+    uint32 room_id = 1;
+    uint32 seat_id = 2;             //用于指定座位
+}
+
+message ReplyJoinRoom {
+    GamePosition game_position = 1;
+    ErrorCode error_code = 100;
+}
+
+

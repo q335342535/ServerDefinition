@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "target/common";
+
+message GamePosition {
+    uint32 game_id = 1;
+    uint32 field_id = 2;
+    uint32 room_id = 3;
+    uint32 seat_id = 4;
+    uint32 seat_count = 5;
+}
+
+
+
